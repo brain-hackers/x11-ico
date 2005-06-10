@@ -227,6 +227,7 @@ const char *ico_geom = NULL;	/* -size: size of object in window */
 const char *delta_geom = NULL;	/* -delta: amount by which to move object */
 Polyinfo *poly;			/* -obj: the poly to draw */
 int dsync = 0;			/* -dsync */
+int xsync = 0;			/* -sync */
 int msleepcount = 0;		/* -sleep value in milliseconds*/
 #ifdef MULTITHREAD
 int thread_count;
@@ -1259,7 +1260,7 @@ int main(argc, argv)
 		} else if (!strcmp(*argv, "-dsync"))
 			dsync = 1;
 		else if (!strncmp(*argv, "-sync",  5)) 
-			_Xdebug = 1;
+			xsync = 1;
 		else if (!strcmp(*argv, "-objhelp")) {
 			giveObjHelp();
 			exit(1);
@@ -1284,6 +1285,8 @@ int main(argc, argv)
 	if (!(dpy = XOpenDisplay(display)))
 	    icoFatal("cannot open display \"%s\"", XDisplayName(display));
     	wm_delete_window = XInternAtom (dpy, "WM_DELETE_WINDOW", False);
+	if (xsync)
+	    XSynchronize(dpy, True);
 
 #ifdef MULTIBUFFER
 	if (multibufext && !XmbufQueryExtension (dpy, &mbevbase, &mberrbase)) {
