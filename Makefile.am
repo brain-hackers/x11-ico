@@ -21,8 +21,8 @@
 
 bin_PROGRAMS = ico
 
-ico_CFLAGS = $(DEP_CFLAGS)
-ico_LDADD = $(DEP_LIBS) -lm
+ico_CFLAGS = $(ICO_CFLAGS)
+ico_LDADD = $(ICO_LIBS) -lm
 
 ico_SOURCES =	\
         allobjs.h \
