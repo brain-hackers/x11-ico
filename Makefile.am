@@ -34,7 +34,7 @@ ico_SOURCES =	\
         objpyr.h \
         polyinfo.h
 
-dist_man_MANS = \
+dist_man1_MANS = \
         ico.man
 
 
