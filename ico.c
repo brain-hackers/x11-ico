@@ -1,4 +1,5 @@
 /* $XConsortium: ico.c,v 1.47 94/04/17 20:45:15 gildea Exp $ */
+/* $XdotOrg: $ */
 /***********************************************************
 
 Copyright (c) 1987  X Consortium
@@ -72,6 +73,16 @@ SOFTWARE.
  *  support for ICCCM delete window message
  *  better thread support - mutex and condition to control termination
  */
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+
+#include <X11/XlibConf.h>
+#ifdef XTHREADS
+# define MULTITHREAD
+#endif
+#endif /* HAVE_CONFIG_H / autoconf */
+
 #include <math.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -250,9 +261,7 @@ xcondition_rec count_cond;	/* Xthreads doesn't define an equivalent to
 void icoFatal (const char *fmt, const char *a0) __attribute__((__noreturn__));
 #endif
 void
-icoFatal(fmt,a0)
-    const char *fmt;
-    const char *a0;
+icoFatal(const char *fmt, const char *a0)
 {
 	fprintf(stderr, "%s: ", ProgramName);
 	fprintf(stderr, fmt, a0);
