@@ -21,7 +21,7 @@
 
 bin_PROGRAMS = ico
 
-ico_CFLAGS = $(ICO_CFLAGS)
+AM_CFLAGS = $(ICO_CFLAGS)
 ico_LDADD = $(ICO_LIBS) $(XTHREADLIB) -lm
 
 ico_SOURCES =	\
