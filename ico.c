@@ -920,7 +920,7 @@ do_ico_window(void *ptr)
 		printf("thread %x waiting for Expose\n", xthread_self());
 #endif
 		for (;;) {
-		    XNextEvent(dpy, &xev);
+		    XIfEvent(dpy, &xev, predicate, (XPointer) closure->draw_window);
 		    if (xev.type == Expose)
 			break;
 		}
