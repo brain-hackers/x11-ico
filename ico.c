@@ -1,5 +1,3 @@
-/* $XConsortium: ico.c,v 1.47 94/04/17 20:45:15 gildea Exp $ */
-/* $XdotOrg: $ */
 /***********************************************************
 
 Copyright (c) 1987  X Consortium
@@ -47,7 +45,6 @@ ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
 SOFTWARE.
 
 ******************************************************************/
-/* $XFree86: xc/programs/ico/ico.c,v 1.9tsi Exp $ */
 
 /******************************************************************************
  * Description
