@@ -42,4 +42,7 @@ XTHREADLIB=`$PKG_CONFIG --variable=xthreadlib x11`
 AC_SUBST(XTHREADLIB)
 
 
-AC_OUTPUT([Makefile])
+AC_CONFIG_FILES([
+	Makefile
+	man/Makefile])
+AC_OUTPUT
