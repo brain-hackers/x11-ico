@@ -254,11 +254,10 @@ static xcondition_rec count_cond;/* Xthreads doesn't define an equivalent to
  *	Error handling
  *****************************************************************************/
 
-#if defined(__GNUC__) && \
-    ((__GNUC__ > 2) || ((__GNUC__ == 2) && (__GNUC_MINOR__ >= 7)))
-void icoFatal (const char *fmt, const char *a0) __attribute__((__noreturn__));
-#endif
-void
+
+static void icoFatal (const char *fmt, const char *a0) _X_NORETURN;
+
+static void
 icoFatal(const char *fmt, const char *a0)
 {
 	fprintf(stderr, "%s: ", ProgramName);

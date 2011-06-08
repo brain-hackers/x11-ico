@@ -36,7 +36,7 @@ XORG_DEFAULT_OPTIONS
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for pkg-config packages
-PKG_CHECK_MODULES(ICO, x11 >= 0.99.1)
+PKG_CHECK_MODULES(ICO, [x11 >= 0.99.1 xproto >= 7.0.17])
 
 XTHREADLIB=`$PKG_CONFIG --variable=xthreadlib x11`
 AC_SUBST(XTHREADLIB)
