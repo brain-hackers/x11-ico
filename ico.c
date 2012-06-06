@@ -174,7 +174,7 @@ static Atom wm_delete_window;
  * any additional threads are created
  */
 
-static char *Primaries[] = {
+static const char *Primaries[] = {
     "red", "green", "blue", "yellow", "cyan", "magenta"
 };
 #define NumberPrimaries 6
@@ -219,7 +219,7 @@ static const char *ProgramName;	/* argv[0] */
 static const char *geom = NULL;	/* -geometry: window geometry */
 static int useRoot = 0;		/* -r */
 static int dash = 0;		/* -d: dashed line pattern */
-static char **colornames;	/* -colors (points into argv) */
+static const char **colornames;	/* -colors (points into argv) */
 #ifdef MULTIBUFFER
 static int update_action = MultibufferUpdateActionBackground;
 #endif
@@ -798,7 +798,7 @@ initDBufs(struct closure *closure, int fg, int bg, int planesperbuf)
 }
 
 static void
-setBufColname(struct closure *closure, int n, char *colname)
+setBufColname(struct closure *closure, int n, const char *colname)
 {
 	int t;
 	XColor dcolor, color;
@@ -1147,7 +1147,7 @@ findpoly(const char *name)
 	icoFatal("can't find object %s", name);
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	const char *display = NULL;
 #ifdef MULTIBUFFER
