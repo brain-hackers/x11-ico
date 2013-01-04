@@ -720,7 +720,8 @@ drawPoly(struct closure *closure, Polyinfo *poly, GC gc,
 }
 
 static void
-initDBufs(struct closure *closure, int fg, int bg, int planesperbuf)
+initDBufs(struct closure *closure, unsigned long fg, unsigned long bg,
+          int planesperbuf)
 {
 	int i,j,jj,j0,j1,k,m,t;
 	DBufInfo *b;
@@ -819,7 +820,7 @@ setBufColname(struct closure *closure, int n, const char *colname)
 static void *
 do_ico_window(void *ptr)
 {
-	int fg, bg;
+	unsigned long fg, bg;
 	XSetWindowAttributes xswa;
 	XWindowAttributes xwa;
 	XEvent xev;
