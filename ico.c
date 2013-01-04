@@ -433,7 +433,7 @@ PartialNonHomTransform(int n, Transform3D m, const Point3D *in, Point3D *out)
  */
 
 static Bool
-predicate(Display *display, XEvent *event, XPointer args)
+predicate(_X_UNUSED Display *display, XEvent *event, XPointer args)
 {
     Window w = (Window) args;
     return event->xany.window == w;
@@ -508,7 +508,11 @@ setDrawBuf (struct closure *closure, int n)
 }
 
 static void
-setDisplayBuf(struct closure *closure, int n, int firsttime)
+setDisplayBuf(struct closure *closure, int n,
+#ifndef MULTIBUFFER
+              _X_UNUSED
+#endif
+              int firsttime)
 {
 #ifdef MULTIBUFFER
 	if (multibufext && dblbuf) {
