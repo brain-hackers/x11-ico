@@ -179,37 +179,37 @@ static const char *Primaries[] = {
 };
 #define NumberPrimaries 6
 
-static const char *help_message[] = {
-"where options include:",
-"-display host:dpy           X server to use",
-"    -geometry geom          geometry of window to use",
-"    -size WxH               size of object to rotate",
-"    -delta +X+Y             amount by which to move object",
-"    -r                      draw in the root window",
-"    -d number               dashed line pattern for wire frames",
-"    -bg color               background color",
-"    -colors color ...       codes to use on sides",
-"    -p#                     use # (1 through 8) primary colors",
+static const char *help_message =
+"where options include:\n"
+"    -display host:dpy       X server to use\n"
+"    -geometry geom          geometry of window to use\n"
+"    -size WxH               size of object to rotate\n"
+"    -delta +X+Y             amount by which to move object\n"
+"    -r                      draw in the root window\n"
+"    -d number               dashed line pattern for wire frames\n"
+"    -bg color               background color\n"
+"    -colors color ...       codes to use on sides\n"
+"    -p#                     use # (1 through 8) primary colors\n"
 #ifdef MULTIBUFFER           
-"    -dbl                    use double buffering (extension if present)",
+"    -dbl                    use double buffering extension (if present)\n"
 #else                        
-"    -dbl                    use double buffering (software only)",
+"    -dbl                    use double buffering (software only)\n"
 #endif                       
-"    -softdbl                use software double buffering",
-"    -noedges                don't draw wire frame edges",
-"    -faces                  draw faces",
-"    -copy                   use multibuffer update action Copied",
-"    -untouched              use multibuffer update action Untouched",
-"    -undefined              use multibuffer update action Undefined",
-"    -lw number              line width to use",
-"    -i                      invert",
-"    -sleep number           seconds to sleep in between draws",
-"    -obj objname            type of polyhedral object to draw",
-"    -objhelp                list polyhedral objects available",
+"    -softdbl                use software double buffering\n"
+"    -noedges                don't draw wire frame edges\n"
+"    -faces                  draw faces\n"
+"    -copy                   use multibuffer update action Copied\n"
+"    -untouched              use multibuffer update action Untouched\n"
+"    -undefined              use multibuffer update action Undefined\n"
+"    -lw number              line width to use\n"
+"    -i                      invert\n"
+"    -sleep number           seconds to sleep in between draws\n"
+"    -obj objname            type of polyhedral object to draw\n"
+"    -objhelp                list polyhedral objects available\n"
 #ifdef MULTITHREAD           
-"    -threads number         number of windows, each its own thread",
+"    -threads number         number of windows, each its own thread\n"
 #endif
-NULL};
+;
 
 static const char *ProgramName;	/* argv[0] */
 
@@ -1274,12 +1274,8 @@ int main(int argc, const char **argv)
 			exit(1);
 		}
 		else {	/* unknown arg */
-			const char **cpp;
-
-			fprintf (stderr, "usage:  %s [options]\n\n",
-			         ProgramName);
-			for (cpp = help_message; *cpp; cpp++)
-				fprintf (stderr, "%s\n", *cpp);
+			fprintf (stderr, "usage:  %s [options]\n\n%s",
+			         ProgramName, help_message);
 			exit (1);
 		}
 	}
