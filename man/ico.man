@@ -54,6 +54,9 @@ about each object.
 .B -colors \fIcolor color ...\fP
 Specify what colors should be used to draw the filled faces of the object.
 If less colors than faces are given, the colors are reused.
+.TP
+.B -version
+Print program version information and exit.
 .SH PROGRAM TERMINATION
 .LP
 Pressing "q" will close a window. If compiled with threads support, the

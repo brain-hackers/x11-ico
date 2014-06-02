@@ -209,6 +209,7 @@ static const char *help_message =
 #ifdef MULTITHREAD           
 "    -threads number         number of windows, each its own thread\n"
 #endif
+"    -version                print program version\n"
 ;
 
 static const char *ProgramName;	/* argv[0] */
@@ -1272,6 +1273,10 @@ int main(int argc, const char **argv)
 		else if (!strcmp(*argv, "-objhelp")) {
 			giveObjHelp();
 			exit(1);
+		}
+		else if (strcmp(*argv, "-version") == 0) {
+			puts(PACKAGE_STRING);
+			exit(0);
 		}
 		else {	/* unknown arg */
 			fprintf (stderr, "%s: unrecognized argument %s\n\n",
