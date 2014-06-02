@@ -1274,6 +1274,8 @@ int main(int argc, const char **argv)
 			exit(1);
 		}
 		else {	/* unknown arg */
+			fprintf (stderr, "%s: unrecognized argument %s\n\n",
+				 ProgramName, *argv);
 			fprintf (stderr, "usage:  %s [options]\n\n%s",
 			         ProgramName, help_message);
 			exit (1);
