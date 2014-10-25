@@ -468,7 +468,7 @@ icoClearArea(struct closure *closure, int x, int y, int w, int h)
 static void
 initPoly(struct closure *closure, Polyinfo *poly, int icoW, int icoH)
 {
-    Point3D *vertices = poly->v;
+    const Point3D *vertices = poly->v;
     int NV = poly->numverts;
     Transform3D r1;
     Transform3D r2;
@@ -477,7 +477,7 @@ initPoly(struct closure *closure, Polyinfo *poly, int icoW, int icoH)
     FormatRotateMat('y', 5 * 3.1416 / 180.0, r2);
     ConcatMat(r1, r2, closure->xform);
 
-    memcpy((char *)closure->xv[0], (char *)vertices, NV * sizeof(Point3D));
+    memcpy(closure->xv[0], vertices, NV * sizeof(Point3D));
     closure->xv_buffer = 0;
 
     closure->wo2 = icoW / 2.0;
@@ -564,7 +564,7 @@ static void
 drawPoly(struct closure *closure, Polyinfo *poly, GC gc,
 	 int icoX, int icoY, int icoW, int icoH, int prevX, int prevY)
 {
-	int *f = poly->f;
+	const int *f = poly->f;
 	int NV = poly->numverts;
 	int NF = poly->numfaces;
 
@@ -577,7 +577,7 @@ drawPoly(struct closure *closure, Polyinfo *poly, GC gc,
 	XSegment edges[MAXEDGES];
 	int i;
 	int j,k;
-	int *pf;
+	const int *pf;
 	int facecolor;
 
 	int pcount;
