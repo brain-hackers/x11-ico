@@ -87,6 +87,7 @@ SOFTWARE.
 #include <X11/Xfuncs.h>
 #include <X11/keysym.h>
 #include <stdio.h>
+#include <stdarg.h>
 #ifdef MULTIBUFFER
 #include <X11/extensions/multibuf.h>
 #endif /* MULTIBUFFER */
@@ -256,13 +257,15 @@ static xcondition_rec count_cond;/* Xthreads doesn't define an equivalent to
  *****************************************************************************/
 
 
-static void icoFatal (const char *fmt, const char *a0) _X_NORETURN;
-
-static void
-icoFatal(const char *fmt, const char *a0)
+static void _X_NORETURN _X_ATTRIBUTE_PRINTF(1, 2)
+icoFatal(const char *fmt, ...)
 {
+	va_list args;
+
 	fprintf(stderr, "%s: ", ProgramName);
-	fprintf(stderr, fmt, a0);
+	va_start(args, fmt);
+	vfprintf(stderr, fmt, args);
+	va_end(args);
 	fprintf(stderr, "\n");
 	exit(1);
 }
@@ -754,7 +757,7 @@ initDBufs(struct closure *closure, unsigned long fg, unsigned long bg,
 		    closure->plane_masks,closure->totalplanes, closure->pixels,1);
 			    /* allocate color planes */
 	    if (t==0) {
-		    icoFatal("can't allocate enough color planes", NULL);
+		    icoFatal("can't allocate enough color planes");
 	    }
 	}
 
@@ -847,7 +850,7 @@ do_ico_window(void *ptr)
 #endif
 	closure->cmap = XDefaultColormap(dpy,DefaultScreen(dpy));
 	if (!closure->cmap) {
-		icoFatal("no default colormap!", NULL);
+		icoFatal("no default colormap!");
 	}
 
 	fg = WhitePixel(dpy, DefaultScreen(dpy));
@@ -930,7 +933,7 @@ do_ico_window(void *ptr)
 		printf("thread %x got Expose\n", xthread_self());
 #endif
 		if (XGetWindowAttributes(dpy,closure->draw_window,&xwa)==0) {
-			icoFatal("cannot get window attributes (size)", NULL);
+			icoFatal("cannot get window attributes (size)");
 		}
 		closure->winW = xwa.width;
 		closure->winH = xwa.height;
@@ -967,7 +970,7 @@ do_ico_window(void *ptr)
 			   0, 0, closure->winW, closure->winH, 0, 0);
 		closure->win = closure->multibuffers[1];
 	    } else 
-	      icoFatal ("unable to obtain 2 buffers", NULL);
+	      icoFatal ("unable to obtain 2 buffers");
 	}
 #endif /* MULTIBUFFER */
 	if (closure->win == None) closure->win = closure->draw_window;
@@ -1288,7 +1291,7 @@ int main(int argc, const char **argv)
 	}
 
 	if (!dofaces && !doedges)
-		icoFatal("nothing to draw", NULL);
+		icoFatal("nothing to draw");
 
 #ifdef MULTITHREAD
 	XInitThreads();
