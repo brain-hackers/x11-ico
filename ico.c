@@ -1128,7 +1128,7 @@ do_ico_window(void *ptr)
 static void
 giveObjHelp(void)
 {
-	int i;
+	unsigned int i;
 	Polyinfo *poly;
 
 	printf("%-16s%-12s  #Vert.  #Edges  #Faces  %-16s\n",
@@ -1145,7 +1145,7 @@ giveObjHelp(void)
 static Polyinfo *
 findpoly(const char *name)
 {
-	int i;
+	unsigned int i;
         Polyinfo *poly;
 
 	for (i=0; i<NumberPolygons; i++) {
