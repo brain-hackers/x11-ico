@@ -1081,7 +1081,7 @@ do_ico_window(void *ptr)
 #ifdef DEBUG
 			printf("thread %x message\n", xthread_self());
 #endif
-			if (xev.xclient.data.l[0] == wm_delete_window)
+			if ((Atom) xev.xclient.data.l[0] == wm_delete_window)
 			    do_it = False;
 			else
 			    XBell (dpy, 0);
