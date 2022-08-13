@@ -235,7 +235,7 @@ static int dofaces = 0;		/* -faces */
 static int invert = 0;		/* -i */
 static const char *ico_geom = NULL;	/* -size: size of object in window */
 static const char *delta_geom = NULL;	/* -delta: amount by which to move object */
-static Polyinfo *poly;		/* -obj: the poly to draw */
+static Polyinfo *polyobj;	/* -obj: the poly to draw */
 static int dsync = 0;		/* -dsync */
 static int xsync = 0;		/* -sync */
 static int msleepcount = 0;	/* -sleep value in milliseconds*/
@@ -1022,7 +1022,7 @@ do_ico_window(void *ptr)
 
 	icodeltax2 = icoDeltaX * 2;
 	icodeltay2 = icoDeltaY * 2;
-	initPoly(closure, poly, icoW, icoH);
+	initPoly(closure, polyobj, icoW, icoH);
 
 	while (do_it) {
 		int prevX;
@@ -1105,7 +1105,7 @@ do_ico_window(void *ptr)
 			icodeltay2 = icoDeltaY * 2;
 		}
 
-		drawPoly(closure, poly, closure->gcontext,
+		drawPoly(closure, polyobj, closure->gcontext,
 			 icoX, icoY, icoW, icoH, prevX, prevY);
 	}
 	XDestroyWindow(dpy, closure->win);
@@ -1173,7 +1173,7 @@ int main(int argc, const char **argv)
 
 	/* Process arguments: */
 
-	poly = findpoly("icosahedron");	/* default */
+	polyobj = findpoly("icosahedron");	/* default */
 
 	for (argv++, argc--; argc > 0; argv++, argc--) {
 		if (!strcmp (*argv, "-display")) {
@@ -1269,7 +1269,7 @@ int main(int argc, const char **argv)
 		} else if (!strcmp (*argv, "-obj")) {
 			if (argc < 2)
 				icoFatal("missing argument for %s", *argv);
-			poly = findpoly(*++argv); argc--;
+			polyobj = findpoly(*++argv); argc--;
 		} else if (!strcmp(*argv, "-dsync"))
 			dsync = 1;
 		else if (!strncmp(*argv, "-sync",  5)) 
