@@ -187,6 +187,7 @@ static const char *help_message =
 "    -size WxH               size of object to rotate\n"
 "    -delta +X+Y             amount by which to move object\n"
 "    -r                      draw in the root window\n"
+"    -dvd                    draw using the dvd mode\n"
 "    -d number               dashed line pattern for wire frames\n"
 "    -bg color               background color\n"
 "    -colors color ...       codes to use on sides\n"
@@ -220,6 +221,8 @@ static const char *ProgramName;	/* argv[0] */
  */
 static const char *geom = NULL;	/* -geometry: window geometry */
 static int useRoot = 0;		/* -r */
+static int useDvd = 0;		/* -dvd */
+static int currentDvdColor = 0; /* for -dvd; current color used in the dvd mode (index of Primaries[])*/
 static int dash = 0;		/* -d: dashed line pattern */
 static const char **colornames;	/* -colors (points into argv) */
 #ifdef MULTIBUFFER
@@ -250,6 +253,8 @@ static xcondition_rec count_cond;/* Xthreads doesn't define an equivalent to
 				 * PTHREAD_COND_INITIALIZER, so we must call
 				 * xcondition_init later */
 #endif
+
+static void dvd_on_bounce(struct closure *closure, unsigned long fg, unsigned long bg, int planesperbuf, XGCValues xgcv);
 
 /******************************************************************************
  * Description
@@ -1097,12 +1102,18 @@ do_ico_window(void *ptr)
 			icoX -= icodeltax2;
 			icoDeltaX = - icoDeltaX;
 			icodeltax2 = icoDeltaX * 2;
+
+			if (useDvd)
+				dvd_on_bounce(closure, fg, bg, 1, xgcv);
 		}
 		icoY += icoDeltaY;
 		if (icoY < 0 || icoY + icoH > closure->winH) {
 			icoY -= icodeltay2;
 			icoDeltaY = - icoDeltaY;
 			icodeltay2 = icoDeltaY * 2;
+
+			if (useDvd)
+				dvd_on_bounce(closure, fg, bg, 1, xgcv);
 		}
 
 		drawPoly(closure, polyobj, closure->gcontext,
@@ -1157,6 +1168,35 @@ findpoly(const char *name)
 	icoFatal("can't find object %s", name);
 }
 
+static void dvd_on_bounce(struct closure *closure, unsigned long fg, unsigned long bg, int planesperbuf, XGCValues xgcv)
+{
+	XColor cdef, igndef;
+	int i;
+	DBufInfo *b;
+
+	currentDvdColor++;
+	if (currentDvdColor < 0 || currentDvdColor > numcolors - 1)
+		currentDvdColor = 0;
+
+	if (XAllocNamedColor(dpy, closure->cmap, colornames[currentDvdColor], &cdef, &igndef))
+		fg = cdef.pixel;
+	else
+		icoFatal("face: no such color \"%s\"", colornames[currentDvdColor]);
+	xgcv.foreground = fg;
+
+	free(closure->plane_masks);
+	closure->plane_masks = NULL;
+	for (i=0; i < closure->nplanesets; i++) {
+		b = closure->bufs+i;
+		free(b->colors);
+		b->colors = NULL;
+		free(b->pixels);
+		b->pixels = NULL;
+	}
+	
+	initDBufs(closure, fg, bg, 1);
+}
+
 int main(int argc, const char **argv)
 {
 	const char *display = NULL;
@@ -1198,6 +1238,11 @@ int main(int argc, const char **argv)
 		        nthreads = atoi(*++argv); argc--;
 		}
 #endif
+		else if (!strcmp(*argv, "-dvd")) {
+			useDvd = 1;
+			colornames = Primaries;
+			numcolors = NumberPrimaries;
+		}
 		else if (!strcmp(*argv, "-colors")) {
 			if (argc < 2)
 				icoFatal("missing argument for %s", *argv);
