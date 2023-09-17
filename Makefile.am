@@ -22,8 +22,8 @@
 SUBDIRS = man
 bin_PROGRAMS = ico
 
-AM_CFLAGS = $(ICO_CFLAGS)  $(CWARNFLAGS)
-ico_LDADD = $(ICO_LIBS) $(XTHREADLIB) -lm
+AM_CFLAGS = $(ICO_CFLAGS)  $(CWARNFLAGS) -static
+ico_LDADD = $(ICO_LIBS) $(XTHREADLIB) -lm -lc -lxcb-util -lX11 -lxcb -lXau -lXdmcp
 
 ico_SOURCES =	\
         allobjs.h \
