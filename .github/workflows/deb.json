@@ -14,16 +14,5 @@
             "license": "Custom",
             "file": "LICENSE"
         }
-    ],
-    "menus": [
-        {
-            "name": "x11-ico-dvd",
-            "description": "A demo program animating polyhedrons (with DVD mode)",
-            "generic-name": "x11-ico-dvd",
-            "type": "Application",
-            "keywords": "x11-apps ico",
-            "startup-notify": false,
-            "categories": "Applications/misc"
-        }
     ]
 }
