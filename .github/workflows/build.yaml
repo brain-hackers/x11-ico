@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      -
+        name: Checkout repository
+        uses: actions/checkout@v3
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Build
+        run: |
+          docker run --platform linux/arm/v5 -i -v $PWD:/ws debian:stable bash << EOF
+          set -xeu
+          cd /ws
+          apt update; apt -y install libx11-dev xorg-dev xutils-dev build-essential autoconf musl xcb libxcb-util-dev libxau-dev x11proto-dev libxdmcp-dev libxau6
+          ./autogen.sh
+          ./configure --enable-static
+          make
+          EOF
+      - name: Save artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact
+          path: |
+            ico
