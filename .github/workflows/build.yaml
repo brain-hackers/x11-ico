@@ -26,9 +26,16 @@ jobs:
           ./configure --enable-static
           make
           EOF
+      - name: Prepare go-bin-deb
+        run: |
+          wget https://github.com/mh-cbon/go-bin-deb/releases/download/0.0.19/go-bin-deb-amd64.deb && \
+          sudo apt -y install ./go-bin-deb-amd64.deb && \
+          rm go-bin-deb-amd64.deb && \
+          go-bin-deb generate --file .github/workflows/deb.json --wd .
       - name: Save artifacts
         uses: actions/upload-artifact@v3
         with:
           name: artifact
           path: |
             ico
+            x11-ico-dvd.deb

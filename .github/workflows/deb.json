@@ -1,0 +1,29 @@
+{
+    "name": "x11-ico-dvd",
+    "maintainer": "Takehiro Ogura <i@yude.jp>",
+    "files": [
+        {
+            "from": "ico",
+            "to": "/usr/bin/ico-dvd"
+        }
+    ],
+    "copyrights": [
+        {
+            "files": "*",
+            "copyright": "1987 Digital Equipment Corporation, Maynard, Massachusetts.; 1987, 1994 X Consortium; 2005 Red Hat, Inc.; 2023 Brain Hackers",
+            "license": "Custom",
+            "file": "LICENSE"
+        }
+    ],
+    "menus": [
+        {
+            "name": "x11-ico-dvd",
+            "description": "A demo program animating polyhedrons (with DVD mode)",
+            "generic-name": "x11-ico-dvd",
+            "type": "Application",
+            "keywords": "x11-apps ico",
+            "startup-notify": false,
+            "categories": "Applications/misc"
+        }
+    ]
+}
