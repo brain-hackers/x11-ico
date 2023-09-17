@@ -5,7 +5,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-linux-armv5:
+    name: linux/armv5
     runs-on: ubuntu-22.04
     steps:
       -
