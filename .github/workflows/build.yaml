@@ -26,7 +26,7 @@ jobs:
           ./configure --enable-static
           make
           mv ico ico-dvd
-          sudo chmod +x ico-dvd
+          chmod +x ico-dvd
           EOF
       - name: Prepare go-bin-deb
         run: |
