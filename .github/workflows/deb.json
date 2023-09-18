@@ -6,7 +6,7 @@
     "files": [
         {
             "from": "ico",
-            "to": "/usr/bin/ico-dvd"
+            "to": "/usr/bin"
         }
     ],
     "copyrights": [
