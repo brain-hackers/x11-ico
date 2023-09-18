@@ -1,6 +1,11 @@
 {
     "name": "x11-ico-dvd",
     "maintainer": "Takehiro Ogura <i@yude.jp>",
+    "version": "0.0.1",
+    "arch": "armel",
+    "depends": [
+        "zstd"
+    ],
     "files": [
         {
             "from": "ico",
