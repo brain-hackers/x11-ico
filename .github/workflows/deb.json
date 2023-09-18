@@ -3,9 +3,6 @@
     "maintainer": "Takehiro Ogura <i@yude.jp>",
     "version": "0.0.1",
     "arch": "armel",
-    "depends": [
-        "zstd"
-    ],
     "files": [
         {
             "from": "ico",
@@ -19,5 +16,6 @@
             "license": "Custom",
             "file": "LICENSE"
         }
-    ]
+    ],
+    "description": "Animate an icosahedron or other polyhedron (with DVD mode)"
 }
