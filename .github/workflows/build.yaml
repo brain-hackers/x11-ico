@@ -31,7 +31,7 @@ jobs:
           wget https://github.com/mh-cbon/go-bin-deb/releases/download/0.0.19/go-bin-deb-amd64.deb && \
           sudo apt -y install ./go-bin-deb-amd64.deb && \
           rm go-bin-deb-amd64.deb && \
-          go-bin-deb generate --file .github/workflows/deb.json --wd . --version 0.0.1 --arch Armel
+          go-bin-deb generate --file .github/workflows/deb.json --wd . --version 0.0.1 --arch armel
       - name: Save artifacts
         uses: actions/upload-artifact@v3
         with:
