@@ -5,7 +5,7 @@
     "arch": "armel",
     "files": [
         {
-            "from": "ico",
+            "from": "ico-dvd",
             "to": "/usr/bin"
         }
     ],
