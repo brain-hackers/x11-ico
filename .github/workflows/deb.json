@@ -6,7 +6,8 @@
     "files": [
         {
             "from": "ico-dvd",
-            "to": "/usr/bin"
+            "to": "/usr/bin",
+            "fperm": "0755"
         }
     ],
     "copyrights": [
