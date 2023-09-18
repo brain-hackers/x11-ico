@@ -32,6 +32,14 @@ jobs:
           sudo apt -y install ./go-bin-deb-amd64.deb && \
           rm go-bin-deb-amd64.deb && \
           go-bin-deb generate --file .github/workflows/deb.json --wd . --version 0.0.1 --arch armel
+      - name: Convert .deb into .xz compressed package
+        run: |
+          ar x *.deb && \
+          rm *.deb && \
+          zstd -d < control.tar.zst | xz > control.tar.xz && \
+          zstd -d < data.tar.zst | xz > data.tar.xz && \
+          ar -m -c -a sdsd x11-ico-dvd.deb debian-binary control.tar.xz data.tar.xz
+
       - name: Save artifacts
         uses: actions/upload-artifact@v3
         with:
