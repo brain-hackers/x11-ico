@@ -57,7 +57,7 @@ jobs:
         name: Upload the package to packagecloud
         env:
           USERNAME: brainhackers
-          REPO: x11-ico/any/any
+          REPO: brainux/any/any
           PACKAGECLOUD_TOKEN: ${{ secrets.PACKAGECLOUD_TOKEN }}
         run: |
           package_cloud push "${USERNAME}/${REPO}" `ls *.deb`
