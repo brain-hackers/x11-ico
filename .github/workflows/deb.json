@@ -1,0 +1,22 @@
+{
+    "name": "x11-ico-dvd",
+    "maintainer": "Takehiro Ogura <i@yude.jp>",
+    "version": "0.0.1",
+    "arch": "armel",
+    "files": [
+        {
+            "from": "ico-dvd",
+            "to": "/usr/bin",
+            "fperm": "0755"
+        }
+    ],
+    "copyrights": [
+        {
+            "files": "*",
+            "copyright": "1987 Digital Equipment Corporation, Maynard, Massachusetts.; 1987, 1994 X Consortium; 2005 Red Hat, Inc.; 2023 Brain Hackers",
+            "license": "Custom",
+            "file": "LICENSE"
+        }
+    ],
+    "description": "Animate an icosahedron or other polyhedron (with DVD mode)"
+}

@@ -1,12 +1,13 @@
 name: Build
 
 on:
-  push:
+  release:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-22.04
+  build-linux-armv5:
+    name: linux/armv5
+    runs-on: ubuntu-20.04
     steps:
       -
         name: Checkout repository
@@ -24,10 +25,39 @@ jobs:
           ./autogen.sh
           ./configure --enable-static
           make
+          mv ico ico-dvd
+          chmod +x ico-dvd
           EOF
-      - name: Save artifacts
+      -
+        name: Prepare go-bin-deb
+        run: |
+          wget https://github.com/mh-cbon/go-bin-deb/releases/download/0.0.19/go-bin-deb-amd64.deb && \
+          sudo apt -y install ./go-bin-deb-amd64.deb && \
+          rm go-bin-deb-amd64.deb && \
+          sudo chmod +x ico-dvd && \
+          go-bin-deb generate --file .github/workflows/deb.json --wd . --version 0.0.1 --arch armel
+
+      -
+        name: Save artifacts
         uses: actions/upload-artifact@v3
         with:
           name: artifact
           path: |
-            ico
+            ico-dvd
+            *.deb
+
+      -
+        name: Prepare packaging & packagecloud CLI
+        run: |
+          sudo apt update
+          sudo apt install debhelper ruby-dev
+          sudo gem install package_cloud
+
+      -
+        name: Upload the package to packagecloud
+        env:
+          USERNAME: brainhackers
+          REPO: brainux/any/any
+          PACKAGECLOUD_TOKEN: ${{ secrets.PACKAGECLOUD_TOKEN }}
+        run: |
+          package_cloud push "${USERNAME}/${REPO}" `ls *.deb`
