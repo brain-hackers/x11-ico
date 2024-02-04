@@ -1,12 +1,14 @@
 name: Build
 
 on:
+  push:
+    branches: ci*
   release:
   workflow_dispatch:
 
 jobs:
-  build-linux-armv5:
-    name: linux/armv5
+  build-linux-arm:
+    name: linux/arm
     runs-on: ubuntu-20.04
     steps:
       -
@@ -16,7 +18,7 @@ jobs:
         name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       -
-        name: Build
+        name: Build (armel)
         run: |
           docker run --platform linux/arm/v5 -i -v $PWD:/ws debian:stable bash << EOF
           set -xeu
@@ -25,17 +27,42 @@ jobs:
           ./autogen.sh
           ./configure --enable-static
           make
-          mv ico ico-dvd
-          chmod +x ico-dvd
+          mkdir armel
+          mv ico armel/ico-dvd
+          chmod +x armel/ico-dvd
           EOF
+
+      -
+        name: Clean
+        run: |
+          make distclean
+
+      -
+        name: Build (armhf)
+        run: |
+          docker run --platform linux/arm/v7 -i -v $PWD:/ws debian:stable bash << EOF
+          set -xeu
+          cd /ws
+          apt update; apt -y install libx11-dev xorg-dev xutils-dev build-essential autoconf musl xcb libxcb-util-dev libxau-dev x11proto-dev libxdmcp-dev libxau6
+          ./autogen.sh
+          ./configure --enable-static
+          make
+          mkdir armhf
+          mv ico armhf/ico-dvd
+          chmod +x armhf/ico-dvd
+          EOF
+
       -
         name: Prepare go-bin-deb
         run: |
           wget https://github.com/mh-cbon/go-bin-deb/releases/download/0.0.19/go-bin-deb-amd64.deb && \
           sudo apt -y install ./go-bin-deb-amd64.deb && \
           rm go-bin-deb-amd64.deb && \
-          sudo chmod +x ico-dvd && \
+          sudo chmod +x armel/ico-dvd && \
           go-bin-deb generate --file .github/workflows/deb.json --wd . --version 0.0.1 --arch armel
+          rm -rf debian
+          sudo chmod +x armhf/ico-dvd && \
+          go-bin-deb generate --file .github/workflows/deb.json --wd . --version 0.0.1 --arch armhf
 
       -
         name: Save artifacts
